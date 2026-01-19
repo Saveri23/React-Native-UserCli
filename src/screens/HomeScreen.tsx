@@ -12,14 +12,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadUsers } from '../redux/usersSlice';
 import UserCard from '../components/UserCard';
 import { RootState, AppDispatch } from '../redux/store';
-
-const HomeScreen = () => {
+const HomeScreen = ({ darkMode, setDarkMode }: any) => {
+  // Remove local darkMode state; use props
   const dispatch = useDispatch<AppDispatch>();
   const { users, loading } = useSelector((state: RootState) => state.users);
 
   const [search, setSearch] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     dispatch(loadUsers());
@@ -41,7 +40,6 @@ const HomeScreen = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      {/* Theme Toggle Button */}
       <TouchableOpacity
         style={styles.themeButton}
         onPress={() => setDarkMode(!darkMode)}
@@ -49,7 +47,6 @@ const HomeScreen = () => {
         <Text style={{ fontSize: 20 }}>{darkMode ? '☀️' : '🌙'}</Text>
       </TouchableOpacity>
 
-      {/* Search Bar */}
       <TextInput
         placeholder="Search users..."
         placeholderTextColor={theme.placeholder}
@@ -58,7 +55,6 @@ const HomeScreen = () => {
         style={[styles.search, { backgroundColor: theme.card, color: theme.text }]}
       />
 
-      {/* User List */}
       <FlatList
         data={filteredUsers}
         keyExtractor={item => item.id.toString()}
@@ -66,7 +62,7 @@ const HomeScreen = () => {
           <UserCard
             user={item}
             onPress={() => {}}
-            theme={theme}
+            theme={{ card: theme.card, text: theme.text }}
           />
         )}
         refreshControl={
@@ -80,6 +76,7 @@ const HomeScreen = () => {
     </View>
   );
 };
+
 
 export default HomeScreen;
 
