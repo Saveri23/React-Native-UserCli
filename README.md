@@ -18,6 +18,8 @@ A simple React Native app to display users fetched from a public API, with searc
 
 ## Installation
 ```bash
+for Clone
+https://github.com/Saveri23/React-Native-UserCli.git
 
 # Start Expo server
 npm start
